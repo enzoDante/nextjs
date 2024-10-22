@@ -1,5 +1,6 @@
 import "./globals.css";
 import MenuBtnMouse from "../Components/mudarBtmMouse/MenuBtnM";
+import Header from "@/Components/Header/Header";
 
 export const metadata = {
   title: "Create Next App",
@@ -8,9 +9,10 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="pt-BR">
       <body>
         <MenuBtnMouse>
+          <Header />
           {children}
         </MenuBtnMouse>
       </body>

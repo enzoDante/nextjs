@@ -1,3 +1,7 @@
+.mainCorpo{
+    margin: 0;
+    padding: 0;
+}
 .menuMouse{
     width: 150px;
     transform: scale(0.8);

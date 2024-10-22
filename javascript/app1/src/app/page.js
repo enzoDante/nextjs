@@ -1,8 +1,10 @@
+'use client';
+import '@/Styles/mainDefault.css';
 
 export default function Home() {
 	return (
-		<main>
-			teste
+		<main className='mainHome'>
+			testeeeeee
 		</main>
 	);
 }

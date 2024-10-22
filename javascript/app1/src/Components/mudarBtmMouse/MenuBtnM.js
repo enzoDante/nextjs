@@ -2,7 +2,7 @@
 import { useState } from "react"
 import '@/Styles/mouseOptions.css';
 
-export default function MenuBtnMouse(){
+export default function MenuBtnMouse({ children }){
 
     const [menuPosition, setMenuPosition] = useState({x: 0, y: 0});
     const [showMenu, setShowMenu] = useState(false);
@@ -21,8 +21,7 @@ export default function MenuBtnMouse(){
     }
 
     return(
-        <div onContextMenu={handleContextMenu} onClick={handleClick} style={{height: '100vh', width: '100vw'}}>
-            <p>teste clique btn direito do mouse</p>
+        <div className="mainCorpo" onContextMenu={handleContextMenu} onClick={handleClick} style={{height: '100vh', width: '100vw'}}>
             {showMenu && (
                 <ul className={`menuMouse ${menuVisible ? 'visible' : ''}`}
                     style={{
@@ -41,6 +40,7 @@ export default function MenuBtnMouse(){
                     <li onClick={() => alert('Opção 3 selecionada')}>Opção 3</li>
                 </ul>
             )}
+            {children}
         </div>
     )
 }
