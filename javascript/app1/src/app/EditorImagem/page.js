@@ -80,6 +80,21 @@ export default function Editor(){
             reader.readAsDataURL(file);
         }
     };
+    const handleKeyDown = (e) => {
+        if (e.key === 'Delete' || e.key === 'Backspace' || e.target.id == 'btnDel') {
+            const activeObject = canvas.getActiveObject();
+            if (activeObject) {
+                canvas.remove(activeObject);
+                canvas.renderAll(); // Re-renderiza o canvas
+            }
+        }
+    };
+    useEffect(() => {
+        window.addEventListener('keydown', handleKeyDown);
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+        };
+    }, [canvas]);
 
     //baixar imagem finalizada
     const downloadImage = (format='png') => {
@@ -109,6 +124,7 @@ export default function Editor(){
             <div>
                 <input type="color" value={textColor} onChange={(e) => setTextColor(e.target.value)} name="" id="" />
                 <button onClick={() => setAddingText(true)}>Adicionar texto</button>
+                <button id='btnDel' onClick={(e) => handleKeyDown(e)}>Deletar objeto selecionado</button>
             </div>
 
             <canvas ref={canvasRef} width={800} height={800} style={{border: '1px solid #000'}}></canvas>
