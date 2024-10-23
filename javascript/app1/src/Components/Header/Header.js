@@ -14,11 +14,6 @@ const Header = () => {
             </Link>
           </li>
           <li>
-            <Link href="/EditorImagem">
-              <p className={'navLink'}>Editor de imagem</p>
-            </Link>
-          </li>
-          <li>
             <Link href="/servicos">
               <p className={'navLink'}>Serviços</p>
             </Link>

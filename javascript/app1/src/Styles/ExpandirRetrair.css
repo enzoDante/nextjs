@@ -1,0 +1,56 @@
+.containerER {
+    /* border: 1px solid #ccc; */
+    border-bottom: 1px solid #ccc;
+    padding: 20px;
+    margin-bottom: 20px;
+    /* border-radius: 5px; */
+    transition: all 0.3s ease;
+  }
+  
+  .description {
+    max-height: 0;
+    overflow: hidden;
+    /* opacity: 0; */
+    transition: max-height 0.3s ease-in-out;
+    /* ease-in-out */
+  }
+  
+  .expanded {
+    /* height: auto; */
+    /* opacity: 1; */
+    /* padding-top: 10px; */
+    max-height: 200px;
+  }
+  
+  .collapsed {
+    /* height: 0; */
+    /* opacity: 0; */
+    max-height: 0;
+  }
+
+.btnMaisMenos{
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+
+}
+.btnMaisMenos:hover{
+    text-decoration: underline;
+    cursor: pointer;
+    
+
+}
+.seta{
+    font-size: 18px;
+}
+
+h2{
+    font-size: 20px;
+    font-weight: bold;
+    color: #b8d9ff;
+    text-decoration: none;
+}
