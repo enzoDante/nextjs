@@ -1,0 +1,118 @@
+#addImgBase{
+    display: none;
+}
+#addImgBaseLabel{
+    font-size: 1.1em;
+    /* border: 1px solid black; */
+    box-shadow: 2px 2px 1px rgb(34, 99, 173);
+    padding: 10px;
+    border-radius: 5px;
+    display: block;
+    max-width: 250px;
+    margin: auto;
+    text-align: center;
+    margin-bottom: 10px;
+    background-color: rgb(44, 127, 221);
+    transition: linear 200ms;
+}
+#addImgBaseLabel:hover{
+    cursor: pointer;
+    background-color: rgb(38, 107, 185);
+    box-shadow: 1px 1px 1px rgba(31, 86, 148, 0.644);
+    color: rgb(199, 194, 184);
+}
+
+#addImgs{
+    display: none;
+}
+#addImgsLabel{
+    font-size: 1.1em;
+    /* border: 1px solid black; */
+    box-shadow: 2px 2px 1px rgb(34, 99, 173);
+    padding: 10px;
+    border-radius: 5px;
+    display: block;
+    max-width: 250px;
+    margin: auto;
+    margin-bottom: 10px;
+    background-color: rgb(74, 150, 238);
+    transition: linear 200ms;
+    text-align: center;
+}
+#addImgsLabel:hover{
+    cursor: pointer;
+    background-color: rgb(54, 109, 173);
+    box-shadow: 1px 1px 1px rgba(31, 86, 148, 0.644);
+    color: rgb(199, 194, 184);
+}
+input[type="color"] {
+    -webkit-appearance: none; /* Remove o estilo padrão no Chrome/Safari */
+    appearance: none; /* Remove o estilo padrão em outros navegadores */
+    width: 100px;
+    height: 40px;
+    border: none;
+    border-radius: 5px;
+    background-color: transparent; /* Torna o fundo transparente */
+    cursor: pointer;
+    box-shadow: 1px 1px 1px rgb(124, 124, 124);
+    transition: ease 200ms;
+}
+input[type=color]:hover{
+    box-shadow: 1px 1px 1px rgb(104, 104, 104);
+    opacity: 0.8;
+}
+
+input[type="color"]::-webkit-color-swatch {
+    border: 1px solid #ccc; /* Borda do seletor de cor */
+    border-radius: 5px; /* Bordas arredondadas */
+}
+#canvaOptions{
+    margin: 15px -15px -10px -15px;
+    padding: 20px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: rgb(212, 202, 202);
+    box-shadow: 1px 1px 1px rgba(54, 54, 54, 0.678);
+}
+#canvaOptions button{
+    font-size: 1em;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    background-color: #7fc5ff;
+    outline: none;
+    border: 1px solid white;
+    transition: ease 200ms;
+}
+#canvaOptions button:hover{
+    background-color: rgb(102, 158, 204);
+    box-shadow: 1px 1px 1px rgba(86, 133, 172, 0.747);
+    border: 1px solid rgb(110, 170, 219);
+    color: rgb(146, 199, 243);
+}
+#canva{
+    display: flex;
+    justify-content: center;
+    background-color: rgb(212, 202, 202);
+    margin: 10px -15px 30px -15px;
+    box-shadow: 1px 1px 1px rgba(54, 54, 54, 0.678);
+    padding: 20px;
+}
+canvas{
+    border-radius: 15px;
+}
+
+#downloads{
+    width: 200px;
+    /* background-color: red; */
+    display: flex;
+    justify-content: center;
+    padding: 5px;
+    columns: 1;
+    flex-wrap: wrap;
+}
+#downloads > button{
+    margin: 5px;
+    width: 200px;
+}

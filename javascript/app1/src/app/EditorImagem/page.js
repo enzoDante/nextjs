@@ -1,7 +1,9 @@
 'use client';
 import '@/Styles/mainDefault.css';
+import '@/Styles/EditorImagem.css';
 import { useEffect, useRef, useState } from "react";
 import { fabric } from 'fabric';
+
 
 export default function Editor(){
     const canvasRef = useRef(null);
@@ -114,25 +116,29 @@ export default function Editor(){
         <main className='mainHome'>
             <h2>Editor de imagem</h2>
             <div>
-                <input type="file" accept='image/*' onChange={handleBackgroundUpload} name="" id="" />
+                <input type="file" accept='image/*' onChange={handleBackgroundUpload} name="" id="addImgBase" />
+                <label htmlFor="addImgBase" id='addImgBaseLabel'>Adicionar imagem de fundo</label>
             </div>
             {/* imagens para sobrepor */}
             <div>
-                <input type="file" accept='image/*' onChange={handleImageUpload} name="" id="" />
+                <input type="file" accept='image/*' onChange={handleImageUpload} name="" id="addImgs" />
+                <label htmlFor="addImgs" id='addImgsLabel'>Adicionar imagens</label>
             </div>
             {/* adicionar texto */}
-            <div>
+            <div id='canvaOptions'>
                 <input type="color" value={textColor} onChange={(e) => setTextColor(e.target.value)} name="" id="" />
                 <button onClick={() => setAddingText(true)}>Adicionar texto</button>
                 <button id='btnDel' onClick={(e) => handleKeyDown(e)}>Deletar objeto selecionado</button>
+
+                <div id='downloads'>
+                    <button onClick={() => downloadImage('png')}>Baixar como PNG</button>
+                    <button onClick={() => downloadImage('jpeg')}>Baixar como JPEG</button>
+                    <button onClick={() => downloadImage('jpg')}>Baixar como JPG</button>
+                </div>
             </div>
 
-            <canvas ref={canvasRef} width={800} height={800} style={{border: '1px solid #000'}}></canvas>
-
-            <div style={{marginTop: '10px'}}>
-                <button onClick={() => downloadImage('png')}>Baixar como PNG</button>
-                <button onClick={() => downloadImage('jpeg')}>Baixar como JPEG</button>
-                <button onClick={() => downloadImage('jpg')}>Baixar como JPG</button>
+            <div id='canva'>
+                <canvas ref={canvasRef} width={800} height={800} style={{border: '1px solid #000'}}></canvas>
             </div>
         </main>
     )
