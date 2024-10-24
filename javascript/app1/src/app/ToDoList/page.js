@@ -19,91 +19,59 @@ export default function ToDo(){
         const padding = 10;
         const blockWidth = 450;
         const blockHeight = parseInt(newDiv.height);
-        let foundCollision = false;
+        let collisionFound = true;
 
-        for(const div of divs){
-            const rect1 = {
-                top: parseInt(newDiv.style.top),
-                left: parseInt(newDiv.style.left),
-                right: parseInt(newDiv.style.left) + blockWidth,
-                bottom: parseInt(newDiv.style.top) + blockHeight,
-            };
-            const rect2 = {
-                top: parseInt(div.style.top),
-                left: parseInt(div.style.left),
-                right: parseInt(div.style.left) + blockWidth,
-                bottom: parseInt(div.style.top) + parseInt(div.height),
-            };
-            //verificar colisão entre blocos
-            if(
-                rect1.left < rect2.right + padding &&
-                rect1.right > rect2.left - padding &&
-                rect1.top < rect2.bottom + padding &&
-                rect1.bottom > rect2.top - padding &&
-                div.id !== newDiv.id
-            ){
-                // Tentar mover o novo bloco em diferentes direções
-                // const directions = [
-                //     { top: rect2.top - blockHeight - padding, left: rect1.left }, // Cima
-                //     { top: rect2.bottom + padding, left: rect1.left }, // Baixo
-                //     { top: rect1.top, left: rect2.left - blockWidth - padding }, // Esquerda
-                //     { top: rect1.top, left: rect2.right + padding }, // Direita
-                // ];
-                foundCollision = true;
+        while(collisionFound){
+            collisionFound = false; //reinicializa flag de colisão
 
-                //lógica para mover o novo bloco na direção correta
-                const deltaX = rect1.left - rect2.left;
-                const deltaY = rect1.top - rect2.top;
-
-                if(Math.abs(deltaX) > Math.abs(deltaY)){
-                    if(deltaX > 0){ //movimento horizontal
-                        //bloco está à direita, mover para a direita
-                        newDiv.style.left = `${rect2.right + padding}px`;
+            for(const div of divs){
+                const rect1 = {
+                    top: parseInt(newDiv.style.top),
+                    left: parseInt(newDiv.style.left),
+                    right: parseInt(newDiv.style.left) + blockWidth,
+                    bottom: parseInt(newDiv.style.top) + blockHeight,
+                };
+                const rect2 = {
+                    top: parseInt(div.style.top),
+                    left: parseInt(div.style.left),
+                    right: parseInt(div.style.left) + blockWidth,
+                    bottom: parseInt(div.style.top) + parseInt(div.height),
+                };
+                //verificar colisão entre blocos
+                if(
+                    rect1.left < rect2.right + padding &&
+                    rect1.right > rect2.left - padding &&
+                    rect1.top < rect2.bottom + padding &&
+                    rect1.bottom > rect2.top - padding &&
+                    div.id !== newDiv.id
+                ){
+                    collisionFound = true;
+                    //lógica para mover o novo bloco na direção correta
+                    const deltaX = rect1.left - rect2.left;
+                    const deltaY = rect1.top - rect2.top;
+    
+                    if(Math.abs(deltaX) > Math.abs(deltaY)){
+                        if(deltaX > 0){ //movimento horizontal
+                            //bloco está à direita, mover para a direita
+                            newDiv.style.left = `${rect2.right + padding}px`;
+                        }else{
+                            //bloco está à esquerda, mover para a esquerda
+                            newDiv.style.left = `${rect2.left - blockWidth - padding}px`;
+                        }
                     }else{
-                        //bloco está à esquerda, mover para a esquerda
-                        newDiv.style.left = `${rect2.left - blockWidth - padding}px`;
+                        if(deltaY > 0){ //movimento vertical
+                            //bloco está abaixo, mover para baixo
+                            newDiv.style.top = `${rect2.bottom + padding}px`;
+                        }else{
+                            //bloco está acima, mover para cima
+                            newDiv.style.top = `${rect2.top - blockHeight - padding}px`;
+                        }
                     }
-                }else{
-                    if(deltaY > 0){ //movimento vertical
-                        //bloco está abaixo, mover para baixo
-                        newDiv.style.top = `${rect2.bottom + padding}px`;
-                    }else{
-                        //bloco está acima, mover para cima
-                        newDiv.style.top = `${rect2.top - blockHeight - padding}px`;
-                    }
+                    break;
                 }
             }
         }
         return newDiv;
-    }
-    //função para verificar se há sobreposição com outros blocos
-    const checkOverlap = (newDiv, divs) => {
-        const rect1 = {
-            top: parseInt(newDiv.style.top),
-            left: parseInt(newDiv.style.left),
-            right: parseInt(newDiv.style.left) + 450,
-            bottom: parseInt(newDiv.style.top) + parseInt(newDiv.height),
-        };
-    
-        for (const div of divs) {
-            const rect2 = {
-                top: parseInt(div.style.top),
-                left: parseInt(div.style.left),
-                right: parseInt(div.style.left) + 450,
-                bottom: parseInt(div.style.top) + parseInt(div.height),
-            };
-    
-            if (
-                rect1.left < rect2.right &&
-                rect1.right > rect2.left &&
-                rect1.top < rect2.bottom &&
-                rect1.bottom > rect2.top
-            ) {
-                return true; // Há sobreposição
-            }
-        }
-    
-        return false; // Não há sobreposição
     }
 
     const removeDiv = (idD) => {
