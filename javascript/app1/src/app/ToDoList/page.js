@@ -19,58 +19,77 @@ export default function ToDo(){
         const padding = 10;
         const blockWidth = 450;
         const blockHeight = parseInt(newDiv.height);
-        let collisionFound = true;
+        // Verifique os limites da janela e ajuste a posição se necessário
+        const windowWidth = window.innerWidth;
+        const windowHeight = window.innerHeight;
 
-        while(collisionFound){
-            collisionFound = false; //reinicializa flag de colisão
+        // Verificação de limites
+        if (parseInt(newDiv.style.left) < 0) {
+            newDiv.style.left = '0px'; // Não deixar mover para a esquerda
+        } else if (parseInt(newDiv.style.left) + blockWidth > windowWidth) {
+            newDiv.style.left = `${windowWidth - blockWidth}px`; // Não deixar mover para a direita
+        }
 
-            for(const div of divs){
-                const rect1 = {
-                    top: parseInt(newDiv.style.top),
-                    left: parseInt(newDiv.style.left),
-                    right: parseInt(newDiv.style.left) + blockWidth,
-                    bottom: parseInt(newDiv.style.top) + blockHeight,
-                };
-                const rect2 = {
-                    top: parseInt(div.style.top),
-                    left: parseInt(div.style.left),
-                    right: parseInt(div.style.left) + blockWidth,
-                    bottom: parseInt(div.style.top) + parseInt(div.height),
-                };
-                //verificar colisão entre blocos
-                if(
-                    rect1.left < rect2.right + padding &&
-                    rect1.right > rect2.left - padding &&
-                    rect1.top < rect2.bottom + padding &&
-                    rect1.bottom > rect2.top - padding &&
-                    div.id !== newDiv.id
-                ){
-                    collisionFound = true;
-                    //lógica para mover o novo bloco na direção correta
-                    const deltaX = rect1.left - rect2.left;
-                    const deltaY = rect1.top - rect2.top;
-    
-                    if(Math.abs(deltaX) > Math.abs(deltaY)){
-                        if(deltaX > 0){ //movimento horizontal
-                            //bloco está à direita, mover para a direita
-                            newDiv.style.left = `${rect2.right + padding}px`;
-                        }else{
-                            //bloco está à esquerda, mover para a esquerda
-                            newDiv.style.left = `${rect2.left - blockWidth - padding}px`;
-                        }
-                    }else{
-                        if(deltaY > 0){ //movimento vertical
-                            //bloco está abaixo, mover para baixo
-                            newDiv.style.top = `${rect2.bottom + padding}px`;
-                        }else{
-                            //bloco está acima, mover para cima
-                            newDiv.style.top = `${rect2.top - blockHeight - padding}px`;
+        if (parseInt(newDiv.style.top) < 0) {
+            newDiv.style.top = '0px'; // Não deixar mover para cima
+        } else if (parseInt(newDiv.style.top) + blockHeight > windowHeight) {
+            newDiv.style.top = `${windowHeight - blockHeight}px`; // Não deixar mover para baixo
+        }
+
+        // Verificação de colisão com outros blocos
+        let collisionDetected;
+        
+        do {
+            collisionDetected = false; // Resetar a colisão a cada iteração
+
+            for (const div of divs) {
+                if (div.id !== newDiv.id) { // Não verificar colisão consigo mesmo
+                    const rect1 = {
+                        top: parseInt(newDiv.style.top),
+                        left: parseInt(newDiv.style.left),
+                        right: parseInt(newDiv.style.left) + blockWidth,
+                        bottom: parseInt(newDiv.style.top) + blockHeight,
+                    };
+                    const rect2 = {
+                        top: parseInt(div.style.top),
+                        left: parseInt(div.style.left),
+                        right: parseInt(div.style.left) + blockWidth,
+                        bottom: parseInt(div.style.top) + parseInt(div.height),
+                    };
+
+                    // Verificar se os blocos estão colidindo
+                    if (
+                        rect1.left < rect2.right + padding &&
+                        rect1.right > rect2.left - padding &&
+                        rect1.top < rect2.bottom + padding &&
+                        rect1.bottom > rect2.top - padding
+                    ) {
+                        collisionDetected = true; // Uma colisão foi detectada
+
+                        // Decidir a direção de deslocamento com base na colisão
+                        const deltaX = rect1.left - rect2.left;
+                        const deltaY = rect1.top - rect2.top;
+
+                        // Mover o novo bloco para evitar colisão
+                        if (Math.abs(deltaX) > Math.abs(deltaY)) {
+                            // Colisão horizontal
+                            if (deltaX > 0) {
+                                newDiv.style.left = `${rect2.right + padding}px`; // Mover para a direita
+                            } else {
+                                newDiv.style.left = `${rect2.left - blockWidth - padding}px`; // Mover para a esquerda
+                            }
+                        } else {
+                            // Colisão vertical
+                            if (deltaY > 0) {
+                                newDiv.style.top = `${rect2.bottom + padding}px`; // Mover para baixo
+                            } else {
+                                newDiv.style.top = `${rect2.top - blockHeight - padding}px`; // Mover para cima
+                            }
                         }
                     }
-                    break;
                 }
             }
-        }
+        } while (collisionDetected); // Continue até que não haja mais colisões
         return newDiv;
     }
 
@@ -134,19 +153,12 @@ export default function ToDo(){
                 draggedDivElement.classList.remove('dragging');
                 draggedDivElement.classList.add('release');
             }
-            // document.querySelectorAll('.blocoToDo').forEach(div => {
-            //     div.classList.remove('dragging');
-            //     div.classList.add('release');
-            // });
         }, 100);
 
         setTimeout(() => {
             const draggedDivElement = document.querySelector(`.blocoToDo[data-id='${draggingDiv}']`);
             if(draggedDivElement)
                 draggedDivElement.classList.remove('release');
-            // document.querySelectorAll('.blocoToDo').forEach(div => {
-            //     div.classList.remove('release'); //'dragging', 
-            // });
         }, 300);
         setDraggingDiv(null);
         
