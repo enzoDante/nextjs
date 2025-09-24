@@ -3,6 +3,7 @@
 const CACHE_NAME = "meu-app-v1";
 const urlsToCache = [
     '/',
+    '/offline.html',
     '/favicon.ico',
     '/github-128x128.png',
     '/github-512x512.png'
@@ -51,6 +52,11 @@ self.addEventListener('fetch', event => {
                 });
 
                 return response;
+            }).catch(() => {
+                // Offline total - só navegação recebe fallback
+                if(event.request.mode === 'navigate'){
+                    return caches.match('/offline.html');
+                }
             });
         })
     );
